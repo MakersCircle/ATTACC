@@ -1,0 +1,1 @@
+# Extracts object-level VGG features from crops

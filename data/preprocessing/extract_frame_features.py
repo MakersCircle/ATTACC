@@ -1,0 +1,1 @@
+# Extracts frame-level features (VGG or I3D)
