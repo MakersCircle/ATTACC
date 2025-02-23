@@ -1,0 +1,6 @@
+active_dataset: "CCD"
+
+datasets:
+  CCD:
+    path: "datasets/ccd/"
+    config_path: "datasets/ccd/config.yaml"
