@@ -1,0 +1,18 @@
+dataset_structure: "txt"
+
+train_list: "vgg16_features/train.txt"
+test_list: "vgg16_features/test.txt"
+
+video_path:
+  positive: "videos/positive/"
+  negative: "videos/negative/"
+
+precomputed_features:
+  feature_path:
+    positive: "vgg16_features/positive/"
+    negative: "vgg16_features/negative/"
+
+extracted_features:
+    positive: "processed/positive/"
+    negative: "processed/negative/"
+
