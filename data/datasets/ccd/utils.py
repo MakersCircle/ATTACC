@@ -32,8 +32,8 @@ def get_feature_path(video_name):
     label = "positive" if "positive" in video_name else "negative"
 
     feature_base = Path(config["precomputed_features"]["feature_path"][label])
-    feature_path = feature_base / f"{video_name}.npz"
-
+    feature_path = Path(__file__).parent / feature_base / f"{video_name}.npz"
+    print(f"Loading features from {feature_path}")
     return feature_path if feature_path.exists() else None
 
 
