@@ -1,6 +1,9 @@
 active_dataset: "CCD"
 
+features: ["object_detection", "object_feature", "frame_feature", "object_depth"]
+
 datasets:
   CCD:
     path: "datasets/ccd/"
     config_path: "datasets/ccd/config.yaml"
+    utils: "datasets/ccd/utils.py"

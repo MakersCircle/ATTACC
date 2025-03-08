@@ -3,6 +3,16 @@
 
 
 
+# Datasets
+
+# CCD
+data/datasets/ccd/*
+#except
+!data/datasets/ccd/config.yaml
+!data/datasets/ccd/utils.py
+!data/datasets/ccd/folder_structure.md
+    
+
 
 
 # General gitignore template
