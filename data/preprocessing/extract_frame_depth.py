@@ -99,11 +99,9 @@ class MonocularDepth:
         self.zoe_depth = depth_model.to(device).eval()
         print("Depth Model Loaded...")
 
-    def find_frame_depth(self, frame, colourize):
-        start_time = time()
+    def find_frame_depth(self, frame, return_colour=False):
         depth_map = self.zoe_depth.infer_pil(frame)
-        print(f'Time/frame: {time() - start_time}')
-        return colourize(depth_map) if colourize else depth_map
+        return colorize(depth_map) if return_colour else depth_map
 
     def image_depth(self, image_path, output_dir, colourize=True):
         image_path = Path(image_path)

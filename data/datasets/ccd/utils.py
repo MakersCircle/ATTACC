@@ -26,10 +26,11 @@ def get_video_paths(split="train"):
     return video_paths
 
 
-def get_feature_path(video_name):
+def get_feature_path(video_path):
     """Get the path to a precomputed feature file."""
     config = load_config()
-    label = "positive" if "positive" in video_name else "negative"
+    video_name = video_path.stem
+    label = "positive" if "positive" in str(video_path) else "negative"
 
     feature_base = Path(config["precomputed_features"]["feature_path"][label])
     feature_path = Path(__file__).parent / feature_base / f"{video_name}.npz"
@@ -37,9 +38,9 @@ def get_feature_path(video_name):
     return feature_path if feature_path.exists() else None
 
 
-def load_feature(video_name, feature_type):
+def load_feature(video_path, feature_type):
     """Load a specific feature (e.g., VGG, depth) from precomputed files of the given video."""
-    feature_path = get_feature_path(video_name)
+    feature_path = get_feature_path(video_path)
     if feature_path:
         if feature_type == "VGG":
             return np.load(feature_path)['data']
@@ -48,9 +49,10 @@ def load_feature(video_name, feature_type):
     return None
 
 
-def save_feature(video_name, feature_dict, feature_type):
+def save_feature(video_path, feature_dict, feature_type):
     """Save extracted features to `extracted_features/` directory."""
     config = load_config()
+    video_name = video_path.stem
     label = "positive" if "positive" in video_name else "negative"
 
     save_path = Path(config["extracted_features"][label])
@@ -70,7 +72,7 @@ if __name__ == "__main__":
     print(f"Found {len(train_videos)} training videos.")
     print(train_videos[0])
 
-    sample_video = train_videos[0].stem
+    sample_video = train_videos[0]
     feature_data = load_feature(sample_video, "vgg")
     if feature_data is not None:
         print(f"Loaded VGG features for {sample_video}")

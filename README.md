@@ -27,4 +27,4 @@ conda install pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 cpuonly -c py
 6. poetry add numpy
 7. poetry add opencv-python
 8. poetry add tqdm
-9. 
+9. pip install timm==0.6.12 (When installed using poetry, it unnecessarily updates pytorch to 2.6. I thought that might cause some dependency issues in the future. So I used pip for this)

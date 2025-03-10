@@ -45,7 +45,12 @@ class ObjectDetectionExtractor:
     - Calls ExplicitObjectDetector only if needed.
     """
 
-    def __init__(self, use_precomputed=True, model_type="yolo", max_objects=10):
+    def __init__(self, use_precomputed=True, model_type="yolo", max_objects=19):
+        '''
+        :param use_precomputed:
+        :param model_type:
+        :param max_objects: Only used if an explicit object detection model is used.
+        '''
         self.use_precomputed = use_precomputed
         self.max_objects = max_objects
         self.detector = ExplicitObjectDetector(model_type) if not use_precomputed else None
@@ -60,15 +65,14 @@ class ObjectDetectionExtractor:
         Returns:
             numpy.ndarray: Object detections in format (T, N, (x1, y1, x2, y2, prob, cls))
         """
-        video_name = Path(video_path).stem  # Extracts filename without extension
 
         if self.use_precomputed:
             # Load object detections from dataset utils
-            detections = load_feature(video_name, feature_type="object_detection")
+            detections = load_feature(video_path, feature_type="object_detection") # This is specific to CCD Dataset. Need to find a generalized approach
             if detections is not None:
                 return detections
             else:
-                print(f"No precomputed detections found for {video_name}.")
+                print(f"No precomputed detections found for {video_path}.")
                 return None
 
         # If explicit detection is enabled, run the object detection model
