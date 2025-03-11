@@ -44,7 +44,7 @@ class FeatureExtractor:
         frame_depths = []
 
         frame_count = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
-        for _ in tqdm(range(frame_count), desc=f"Extracting Depths for {video_path}"):
+        for _ in range(frame_count):
             ret, frame = video_capture.read()
             if not ret:
                 break
