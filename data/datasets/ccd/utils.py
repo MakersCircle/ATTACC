@@ -53,9 +53,9 @@ def save_feature(video_path, feature_dict, feature_type):
     """Save extracted features to `extracted_features/` directory."""
     config = load_config()
     video_name = video_path.stem
-    label = "positive" if "positive" in video_name else "negative"
+    label = "positive" if "positive" in str(video_path) else "negative"
 
-    save_path = Path(config["extracted_features"][label])
+    save_path = Path(__file__).parent / Path(config["extracted_features"][label])
     save_path.mkdir(parents=True, exist_ok=True)
 
     feature_file = save_path / f"{video_name}_{feature_type}.npy"

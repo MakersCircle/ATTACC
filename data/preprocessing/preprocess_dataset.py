@@ -25,7 +25,7 @@ class PreprocessDataset:
         self.video_paths = get_video_paths(split=self.mode)
 
         self.start_video_number = start_video_number
-        self.end_video_number = end_video_number if end_video_number else len(self.video_paths)
+        self.end_video_number = end_video_number if end_video_number else len(self.video_paths) - 1
         self.use_precomputed = use_precomputed
 
         # Configure Logging
