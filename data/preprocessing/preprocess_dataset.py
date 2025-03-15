@@ -21,7 +21,6 @@ class PreprocessDataset:
         """
         self.mode = mode
 
-
         self.video_paths = get_video_paths(split=self.mode)
 
         self.start_video_number = start_video_number
@@ -34,7 +33,7 @@ class PreprocessDataset:
 
         self.log_file = log_dir / "preprocess.log"
         self.processed_videos_file = log_dir / "processed_videos.txt"
-
+ 
         logging.basicConfig(
             filename=self.log_file,
             filemode="a",
@@ -110,12 +109,12 @@ class PreprocessDataset:
 
         self.logger.info(f"Preprocessing complete for range {self.start_video_number} to {self.end_video_number}")
 
+ 
 if __name__ == "__main__":
-    mode = 'test'
+    mode = 'train'
 
-    mode = "test"
-    start_video = 0  # Set this for each team member
-    end_video = 500  # Define batch size
+    start_video = 3000  # Set this for each team member
+    end_video = 3449  # Define batch size
 
-    processor = PreprocessDataset(mode=mode, start_video_number=start_video, use_precomputed=True)
+    processor = PreprocessDataset(mode=mode, start_video_number=start_video,end_video_number=end_video, use_precomputed=True)
     processor.run()
