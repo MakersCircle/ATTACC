@@ -1,3 +1,4 @@
+import re
 import yaml
 import numpy as np
 from pathlib import Path
@@ -71,6 +72,42 @@ def save_feature(video_path, feature_dict, feature_type):
     np.save(feature_file, feature_dict)
     print(f"Saved features for {video_name}: {feature_file}")
 
+def load_annotation(binlabels_only = True):
+    annotation_file = Path(__file__).parent / 'Crash-1500.txt'
+    data = []
+    bin_labels = {}
+    with open(annotation_file) as f:
+        for line in f.readlines():
+            # Use regex to extract fields properly
+            match = re.match(r"^(\d+),(\[.*?\]),(\d+),(\d+),(Day|Night),(Normal|Snowy|Rainy),(Yes|No)$", line.strip())
+            if match:
+                vidname = match.group(1)
+                binlabels = eval(match.group(2))  # Safely evaluate the binary labels
+                startframe = int(match.group(3))
+                youtubeID = match.group(4)
+                timing = match.group(5)
+                weather = match.group(6)
+                egoinvolve = match.group(7)
+
+                data.append({
+                    'vidname': vidname,
+                    'binlabels': binlabels,
+                    'startframe': startframe,
+                    'youtubeID': youtubeID,
+                    'timing': timing,
+                    'weather': weather,
+                    'egoinvolve': egoinvolve
+                })
+
+                bin_labels[vidname] = binlabels
+
+
+    if binlabels_only:
+        return bin_labels
+
+    return data
+
+
 
 if __name__ == "__main__":
     # Example usage
@@ -91,3 +128,5 @@ if __name__ == "__main__":
     print(np.array(feature_data).shape)
     # Example feature saving
     # save_feature(sample_video, {"depth": np.array([1, 2, 3])}, feature_type="depth")
+
+    print(load_annotation())

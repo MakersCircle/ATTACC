@@ -1,5 +1,7 @@
 dataset_structure: "txt"
 
+n_frames: 50
+
 train_list: "vgg16_features/train.txt"
 test_list: "vgg16_features/test.txt"
 
