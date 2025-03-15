@@ -113,9 +113,8 @@ class PreprocessDataset:
 if __name__ == "__main__":
     mode = 'test'
 
-    mode = "test"
     start_video = 0  # Set this for each team member
-    end_video = 500  # Define batch size
+    end_video = 1500  # Define batch size
 
-    processor = PreprocessDataset(mode=mode, start_video_number=start_video, use_precomputed=True)
+    processor = PreprocessDataset(mode=mode, start_video_number=start_video, end_video_number=end_video, use_precomputed=True)
     processor.run()

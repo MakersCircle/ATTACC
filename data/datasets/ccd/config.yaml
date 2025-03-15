@@ -8,9 +8,17 @@ video_path:
   negative: "videos/negative/"
 
 precomputed_features:
-  feature_path:
+  VGG:
     positive: "vgg16_features/positive/"
     negative: "vgg16_features/negative/"
+
+  object_detection:
+    positive: "vgg16_features/positive/"
+    negative: "vgg16_features/negative/"
+
+  object_depth:
+    positive: "processed/positive"
+    negative: "processed/negative/"
 
 extracted_features:
     positive: "processed/positive/"
