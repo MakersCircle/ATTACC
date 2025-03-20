@@ -20,6 +20,10 @@ models/pretrained/*
 !models/pretrained/README.md
 
 
+# Saved models
+
+models/saved_models/ccd/*
+!models/saved_models/ccd/README.md
 
 # General gitignore template
 
