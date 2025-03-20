@@ -26,6 +26,10 @@ def get_video_paths(split="train"):
 
     return video_paths
 
+def get_n_frames():
+    config = load_config()
+    return config["n_frames"]
+
 
 def get_feature_path(video_path, feature_type):
     """Get the path to a precomputed feature file."""
@@ -42,7 +46,6 @@ def get_feature_path(video_path, feature_type):
         feature_path = Path(__file__).parent / feature_base / f"{video_name}_object_depth.npy"
     else:
         feature_path = Path(__file__).parent / feature_base / f"{video_name}.npz"
-    print(f"Loading features from {feature_path}")
     return feature_path if feature_path.exists() else None
 
 
@@ -110,6 +113,7 @@ def load_annotation(binlabels_only = True):
 
 
 if __name__ == "__main__":
+
     # Example usage
     config = load_config()
     print("Dataset Structure:", config["dataset_structure"])
@@ -119,7 +123,7 @@ if __name__ == "__main__":
     print(train_videos[0])
 
     sample_video = train_videos[0]
-    feature_data = load_feature(sample_video, "object_depth")
+    feature_data = load_feature(sample_video, "VGG")
     if feature_data is not None:
         print(f"Loaded VGG features for {sample_video}")
     else:
@@ -128,5 +132,3 @@ if __name__ == "__main__":
     print(np.array(feature_data).shape)
     # Example feature saving
     # save_feature(sample_video, {"depth": np.array([1, 2, 3])}, feature_type="depth")
-
-    print(load_annotation())
