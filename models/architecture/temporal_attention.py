@@ -17,6 +17,6 @@ class TemporalEncoder(nn.Module):
         Returns:
             prob: (T,), accident probability per frame
         """
-        x = self.fc(x)              # (T, transformer_dim)
-        x = self.transformer(x.unsqueeze(0)).squeeze(0)  # (T, transformer_dim)
+        x = self.fc(x)   # (T, transformer_dim)
+        x = self.transformer(x) # (B, T, transformer_dim)
         return x

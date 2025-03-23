@@ -1,8 +1,11 @@
 # models/evaluator.py
 
 import torch
+import numpy as np
+from pathlib import Path
 from torch.utils.data import DataLoader
-from data.data_dataloader import VideoDataset
+
+from data.dataset_loader import VideoDataset
 from models.architecture.accident_model import GraphTransformerAccidentModel
 from models.metrics import compute_metrics
 
@@ -35,3 +38,8 @@ def evaluate_model(model_path):
 
     print(f"Mean AP  : {np.mean(ap_scores):.4f}")
     print(f"Mean TTA : {np.mean(tta_scores):.2f} frames")
+
+
+if __name__ == "__main__":
+    model_path = Path(__file__).parent / "models" / 'saved_models' / 'ccd' / 'model_epoch5.pt'
+    evaluate_model(model_path=model_path)

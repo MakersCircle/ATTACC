@@ -16,9 +16,11 @@ def compute_tta(pred, target, threshold=0.5):
     if target.sum() == 0:
         return 0.0  # non-accident video
 
-    acc_start = target.nonzero()[0].item()
-    for t in range(acc_start):
-        if pred[t] > threshold:
+    target = np.array(target)
+    acc_start = np.where(target == 1)[0][0]
+    print(np.array(pred).shape)
+    for t in range(len(target)):
+        if pred[0][t] > threshold:
             return acc_start - t
 
     return 0.0
