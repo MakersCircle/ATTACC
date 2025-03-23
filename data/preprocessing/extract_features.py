@@ -4,7 +4,7 @@ import numpy as np
 from pathlib import Path
 from tqdm import tqdm
 
-from data.datasets.ccd.utils import load_feature, get_video_paths
+from data.datasets.ccd.utils import load_feature, get_video_paths, save_feature
 from data.preprocessing.extract_frame_depth import MonocularDepth
 from data.preprocessing.extract_object_detections import ObjectDetectionExtractor
 from data.preprocessing.extract_object_depth import get_object_depth
@@ -55,6 +55,8 @@ class FeatureExtractor:
             frame_depths.append(depth_map)
 
         video_capture.release()
+        if len(frame_depths) == 49:
+            frame_depths.append(frame_depths[-1].copy())
         frame_depths = np.array(frame_depths)  # Convert to numpy array
 
 
@@ -93,10 +95,12 @@ if __name__ == "__main__":
     
     paths = get_video_paths()
 
-    video_path = paths[0]
+    video_path = paths[3594]
     print(f"Extracting {video_path}...")
     extractor = FeatureExtractor(use_precomputed=True)
 
     # Extract Object Depth Features
     obj_depth_features = extractor.extract_features(video_path, feature_type="object_depth")
     print("Extracted Object Depth Features Shape:", obj_depth_features.shape)
+
+    # save_feature(video_path, obj_depth_features, feature_type="object_depth")

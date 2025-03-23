@@ -81,7 +81,7 @@ class VideoDataset(Dataset):
         frame_features, object_features = features[:, 0, :], features[:, 1:, :]
 
         # Load binary accident labels
-        bin_labels = self.annotations[video_name]
+        bin_labels = self.annotations[video_name] if cls==1 else [0] * self.n_frames
 
         # Compute TTA
         if cls == 1:
