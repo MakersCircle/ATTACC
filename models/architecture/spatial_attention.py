@@ -3,6 +3,7 @@
 import torch
 import torch.nn as nn
 from torch_geometric.nn import GATConv
+from torch_geometric.nn import global_mean_pool
 
 class SpatialEncoder(nn.Module):
     def __init__(self, in_channels=4097, hidden_channels=512, out_channels=256, heads=4):
@@ -24,7 +25,6 @@ class SpatialEncoder(nn.Module):
         x = self.gat2(x, edge_index)
 
         # Mean pool over objects in each frame
-        from torch_geometric.nn import global_mean_pool
         graph_embeddings = global_mean_pool(x, batch)  # (T, out_channels)
 
         return graph_embeddings
