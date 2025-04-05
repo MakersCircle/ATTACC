@@ -20,17 +20,31 @@ def evaluate_model(model_path):
     dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
 
     results = []
+    output = {}
 
     for batch in dataloader:
-        obj_det, obj_depth, obj_feat, frame_feat, bin_labels, tta, cls = [b.to(device) for b in batch]
+
+        obj_det, obj_depth, obj_feat, frame_feat, bin_labels, tta, cls, vid_name = batch
+        obj_det, obj_depth, obj_feat, frame_feat, bin_labels, tta, cls = [b.to(device) for b in [obj_det, obj_depth, obj_feat, frame_feat, bin_labels, tta, cls]]
 
         with torch.no_grad():
             probs, _ = model(obj_feat, obj_depth)
             probs = probs.detach().cpu().numpy()
             labels = bin_labels.squeeze().cpu().numpy()
 
+
+        for i in range(len(probs)):
+            output[f'{int(cls[i].item())}_{vid_name[i]}'] = {
+                'probabilities': probs[i],
+                'labels': bin_labels[i].cpu().numpy(),
+                'cls': cls[i].cpu().numpy(),
+            }
+
         metrics = compute_metrics(probs, labels)
         results.append(metrics)
+
+    output_path = Path(__file__).parent.parent / 'outputs' / 'testing' / 'ccd' / 'predictions.npz'
+    np.savez(output_path, **output)
 
     # Aggregate metrics
     ap_scores = [r['AP'] for r in results]
@@ -41,5 +55,5 @@ def evaluate_model(model_path):
 
 
 if __name__ == "__main__":
-    model_path = Path(__file__).parent / "models" / 'saved_models' / 'ccd' / 'model_epoch5.pt'
+    model_path = Path(__file__).parent / 'saved_models' / 'ccd' / 'GATConv_TUGL' / 'model_epoch40.pt'
     evaluate_model(model_path=model_path)

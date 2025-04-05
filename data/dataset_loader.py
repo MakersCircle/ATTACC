@@ -90,15 +90,27 @@ class VideoDataset(Dataset):
             tta = [self.n_frames + 1] * self.n_frames  # Large TTA for negative samples
 
         # Convert to tensors
-        return (
-            torch.tensor(object_detections, dtype=torch.float32),
-            torch.tensor(object_depths, dtype=torch.float32).unsqueeze(-1),
-            torch.tensor(object_features, dtype=torch.float32),
-            torch.tensor(frame_features, dtype=torch.float32).unsqueeze(1),
-            torch.tensor(bin_labels, dtype=torch.float32),
-            torch.tensor(tta, dtype=torch.float32),
-            torch.tensor(cls, dtype=torch.float32).unsqueeze(-1),
-        )
+        if self.is_train:
+            return (
+                torch.tensor(object_detections, dtype=torch.float32),
+                torch.tensor(object_depths, dtype=torch.float32).unsqueeze(-1),
+                torch.tensor(object_features, dtype=torch.float32),
+                torch.tensor(frame_features, dtype=torch.float32).unsqueeze(1),
+                torch.tensor(bin_labels, dtype=torch.float32),
+                torch.tensor(tta, dtype=torch.float32),
+                torch.tensor(cls, dtype=torch.float32).unsqueeze(-1),
+            )
+        else:
+            return (
+                torch.tensor(object_detections, dtype=torch.float32),
+                torch.tensor(object_depths, dtype=torch.float32).unsqueeze(-1),
+                torch.tensor(object_features, dtype=torch.float32),
+                torch.tensor(frame_features, dtype=torch.float32).unsqueeze(1),
+                torch.tensor(bin_labels, dtype=torch.float32),
+                torch.tensor(tta, dtype=torch.float32),
+                torch.tensor(cls, dtype=torch.float32).unsqueeze(-1),
+                video_name
+            )
 
 
 if __name__ == '__main__':
