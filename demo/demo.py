@@ -3,9 +3,10 @@ import cv2
 import numpy as np
 from pathlib import Path
 import matplotlib.pyplot as plt
+from matplotlib.animation import FFMpegWriter
 from matplotlib.animation import FuncAnimation
 
-video_name = '001484'
+video_name = '000425'
 video_folder = Path(__file__).parent / video_name
 
 # Define paths
@@ -13,7 +14,7 @@ original_path = video_folder / f'{video_name}.mp4'
 overlay_path = video_folder / f'{video_name}_detection.mp4'
 depth_path = video_folder / f'{video_name}_depth.mp4'
 prob_toa_path = video_folder / f'{video_name}_prob_toa.npz'
-output_path = video_folder / f'{video_name}_demo.gif'
+output_path = video_folder / f'{video_name}_demo.mp4'
 
 # Load probabilities
 data = np.load(prob_toa_path, allow_pickle=True)
@@ -33,7 +34,7 @@ width = int(cap_orig.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap_orig.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 # Create the layout (2 rows, 3 columns)
-fig = plt.figure(figsize=(12, 6))
+fig = plt.figure(figsize=(16, 9))
 
 # First row: 3 images (videos)
 ax1 = plt.subplot(2, 3, 1)
@@ -96,8 +97,8 @@ def update(frame_idx):
 # Create the animation
 ani = FuncAnimation(fig, update, frames=num_frames, interval=100, repeat=False)
 
-
-ani.save(filename=output_path, writer='pillow')
+writer = FFMpegWriter(fps=10, codec='mpeg4')
+ani.save(filename=output_path, writer=writer)
 
 # Adjust layout and show the plot
 plt.tight_layout()
