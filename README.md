@@ -5,7 +5,7 @@ ATTACC is an attention-based accident anticipation system for dashcam-style driv
 
 
 
-![ATTACC demo](demo/000425/000425_demo.gif)
+![ATTACC demo](./demo/000425/000425_demo.gif)
 
 
 ## Tech stack and project status
