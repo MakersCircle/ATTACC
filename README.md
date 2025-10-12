@@ -17,8 +17,7 @@ ATTACC is an attention-based accident anticipation system for dashcam-style driv
 - Utilities: numpy, tqdm, scikit-learn
 - Optional: CUDA (11.8/12.1/12.4 supported via conda channels in the commands below)
 
-Note: There is no CLI entry point defined in pyproject.toml. Scripts are run as Python modules or by executing files directly. Some paths and hyperparameters are currently hard-coded in scripts. TODO: add argparse-based CLIs and [project.scripts] entry points.
-
+Note: There is no CLI entry point defined in pyproject.toml. Scripts are run as Python modules or by executing files directly. Some paths and hyperparameters are currently hard-coded in scripts.
 
 ## Requirements
 - Python 3.10+
@@ -110,6 +109,8 @@ High-level directories of this repository:
 - Some dataset and feature paths are currently hard-coded for CCD; adapt as needed.
 
 
-TODO: add argparse to trainer/evaluator/preprocess to make CLI usage consistent and configurable.
-TODO: Add citation information and license if this codebase is to be shared publicly.
+## TODO
+- add argparse to trainer/evaluator/preprocess to make CLI usage consistent and configurable.
+- add argparse-based CLIs and [project.scripts] entry points.
+- Add citation information and license
 
